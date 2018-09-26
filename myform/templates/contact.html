@@ -1,0 +1,43 @@
+{% extends "baseLayout.html" %}
+{% block styles %}
+{{ block.super }}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+{% endblock %}
+{% block content %}
+<h1 class="text-center">Liste des contacts</h1>
+<div class="section">
+    <div class="row">
+        <div class="col-md-8">
+<div class="table-responsive">
+        <table class="table table-bordered table-striped" id="datable">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" class="text-center">Nom</th>
+                <th scope="col" class="text-center">Prénom</th>
+                <th scope="col" class="text-center">Email</th>
+                <th scope="col" class="text-center">Commentaire</th>
+                <th scope="col" class="text-center">Modération</th>
+              </tr>
+            </thead>
+            <tbody>
+                    {%for contact in contacts %}
+                <tr>  
+                <td class="text-center">{{contact.name}}</td>
+                <td class="text-center">{{contact.firstname}}</td>
+                <td class="text-center">{{contact.email}}</td>
+                <td class="text-center">{{contact.message}}</td>
+                <td class="text-center"><a href="edit/{{ contact.pk }}"><i class="fas fa-edit"></i></a> <a href="delete/{{ contact.pk }}"><i class="fas fa-trash-alt"></i></a></td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+          </div>
+        </div>
+        <div class="col-md-4">
+<form action="{{ path }}" method="POST">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Envoyer">
+</form>
+</div></div>
+{% endblock %}

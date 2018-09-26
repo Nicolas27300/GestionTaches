@@ -1,0 +1,40 @@
+{% extends "lesTaches/baseLayout.html" %}
+{% block styles %}
+{{ block.super }}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+{% endblock %}
+{% block content %}
+<h1 class="text-center">Liste des tâches</h1>
+<div class="table-responsive">
+        <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-center">Description</th>
+                <th scope="col" class="text-center">Scheduled date</th>
+                <th scope="col" class="text-center">Due date</th>
+                <th scope="col" class="text-center">Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+                    {%for elem in objets %}
+                    {% if elem.closed %}
+                    <tr class="closed">
+                {% else %}
+                    <tr class="open">
+                  {% endif %}
+                <td class="text-center">{{elem.name}}</td>
+                <td class="text-center">{{elem.description}}</td>
+                <td class="text-center">{{elem.scheduled_date}}</td>
+                <td class="text-center">{{elem.colored_due_date}}</td>
+                {% if elem.closed %}
+                    <td class="text-center"><i class="fas fa-lock" /></td>
+                {% else %}
+                    <td class="text-center"><i class="fas fa-lock-open" /></td>
+                  {% endif %}
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+          </div>
+          {% endblock %}
