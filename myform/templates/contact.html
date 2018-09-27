@@ -1,6 +1,7 @@
 {% extends "baseLayout.html" %}
 {% block styles %}
 {{ block.super }}
+{% load crispy_forms_tags %}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 {% endblock %}
 {% block content %}
@@ -34,10 +35,23 @@
           </div>
         </div>
         <div class="col-md-4">
-<form action="{{ path }}" method="POST">
+<form action="{{ path }}" method="POST" class="form-row">
 {% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Envoyer">
+<div class="col-md-6">
+{{ form.name|as_crispy_field }}
+</div>
+<div class="col-md-6">
+  {{ form.firstname|as_crispy_field }}
+</div>
+<div class="col-md-12">
+{{ form.email|as_crispy_field }}
+</div>
+<div class="col-md-12">
+{{ form.message|as_crispy_field }}
+</div>
+<div class="col-md-12">
+<center><input type="submit" class="btn btn-success" value="Envoyer"></center>
+</div>
 </form>
-</div></div>
+</div></div></div>
 {% endblock %}

@@ -11,7 +11,7 @@ class ContactForm(ModelForm):
         model = Contact
         fields = ('name', 'firstname', 'email', 'message')
         widgets = {
-            'message' : Textarea(attrs={'cols' : 40, 'rows' : 10}),
+            'message' : Textarea(attrs={'cols' : 40, 'rows' : 3}),
         }
         labels = {
             'name' : 'Nom',
@@ -28,17 +28,6 @@ def list(request):
             new_contact = form.save()
             return redirect(reverse('list'))
     contexte = {'contacts' : contacts, 'form' : form}
-    return render(request, 'contact.html', contexte)
-
-#fonction ajout pour le moment
-def contact(request):
-    form = ContactForm()
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            new_contact = form.save()
-            return redirect(reverse('detail', args= {new_contact.pk}))
-    contexte = {'form': form, 'path' : '/contacts/'}
     return render(request, 'contact.html', contexte)
 
 def edit(request, cid):
@@ -64,15 +53,3 @@ def detail(request, cid):
 def editdetail(request, cid):
     contact = Contact.objects.get(pk=cid)
     return HttpResponse('<p>Contact modifiét</p>' + contact.name)
-
-class ContactForm2(forms.Form):
-    name = forms.CharField(max_length=200, label='Nom', widget=forms.TextInput(attrs={'placeholder': 'Nom'}))
-    firstname = forms.CharField(max_length=200, label='Prénom', widget=forms.TextInput(attrs={'placeholder': 'Prénom'}))
-    email = forms.EmailField(max_length=200, label="Mail")
-    message = forms.CharField(max_length=1000, widget=forms.Textarea(attrs={'cols' : 80, 'rows' : 10}), label='Message')
-
-"""def contact(request):
-    contact_form = ContactForm()
-    contact_form2 = ContactForm2()
-    return render(request, 'contact.html', {'contact_form' : contact_form, 'contact_form2' : contact_form2})
-"""
